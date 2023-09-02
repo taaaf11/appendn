@@ -39,6 +39,9 @@ main (int argc, char **argv)
         }
     }
 
+    if (argc == 1)
+        usage(1);
+
     if (ask_help)
         usage(0);
 
