@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <string.h>
 
 typedef unsigned int flag;
+
+#define    STREQ(a, b)            (strcmp(a, b) == 0)
 
 int
 is_newline_at_end (FILE *fp)
@@ -18,20 +21,25 @@ is_newline_at_end (FILE *fp)
 
 /* read files names from a file and do operation on them */
 void
-file_names_from_file (char *entries_file)
+file_names_from_file (FILE *entries_file_p)
 {
-    FILE *file = fopen(entries_file, "a+");
     char file_name[255];
     
     while (1)
     {
-        if (fscanf(file, "%s", file_name) != 1)
+        if (fscanf(entries_file_p, "%s", file_name) != 1)
             break;
 
         else
         {
-            if (!is_newline_at_end (file))
-                fputc('\n', file);
+            FILE *read    = fopen (file_name, "r");
+            FILE *append  = fopen (file_name, "a+");
+            
+            if (!is_newline_at_end (read))
+                fputc('\n', append);
+
+            fclose(read);
+            fclose(append);
         }
 
         char file_name[255];

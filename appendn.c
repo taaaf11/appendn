@@ -56,16 +56,30 @@ main (int argc, char **argv)
     if (ask_help)
         usage(0);
 
-    if (!aflag && argc > 1)
+    if (!aflag && argc == 1)
     {
-        FILE *file = fopen(argv[1], "a+");
-
-        if (!is_newline_at_end (file))
-            fputc('\n', file);
+        FILE *read    = fopen(argv[1], "r");
+        FILE *append  = fopen(argv[1], "a");
+        
+        if (is_newline_at_end (read) == 0)
+            fputc('\n', append);
+        
+        fclose(read);
+        fclose(append);
     }
 
     if (f_switch)
-        file_names_from_file (file_name);
+    {
+        if (!STREQ(file_name, "-"))
+        {
+            FILE *entries_file = fopen(file_name, "r");
+            file_names_from_file(entries_file);
+            fclose(entries_file);
+        }
+        
+        else
+            file_names_from_file(stdin);
+    }
     
     return 0;
 }
