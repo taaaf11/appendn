@@ -1,3 +1,14 @@
+/*
+
+- Program Name: appendn
+- Author: Muhammad Altaaf
+- Contact: taafuuu@gmail.com
+
+- Description: Program to add newline at end of a file, if there is none.
+
+*/
+
+
 #include "definitions.h"
 #include "usage.h"
 
