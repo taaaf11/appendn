@@ -3,7 +3,7 @@
 typedef unsigned int flag;
 
 int
-newline_at_end (FILE *fp)
+is_newline_at_end (FILE *fp)
 {
     fseek(fp, SEEK_SET, SEEK_END); // set cursor at end of file
 
@@ -30,7 +30,7 @@ file_names_from_file (char *entries_file)
 
         else
         {
-            if (!newline_at_end (file))
+            if (!is_newline_at_end (file))
                 fputc('\n', file);
         }
 
