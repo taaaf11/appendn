@@ -56,7 +56,7 @@ main (int argc, char **argv)
     if (ask_help)
         usage(0);
 
-    if (!aflag && argc == 1)
+    if (!aflag && argc == 2)
     {
         FILE *read    = fopen(argv[1], "r");
         FILE *append  = fopen(argv[1], "a");
