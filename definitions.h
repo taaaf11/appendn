@@ -19,6 +19,16 @@ is_newline_at_end (FILE *fp)
 }
 
 
+int
+file_opened (FILE *fp)
+{
+    if (!fp)
+        return 0; // file couldn't be read
+    else
+        return 1;
+}
+
+
 /* read files names from a file and do operation on them */
 void
 file_names_from_file (FILE *entries_file_p)
@@ -32,10 +42,16 @@ file_names_from_file (FILE *entries_file_p)
 
         else
         {
-            FILE *read    = fopen (file_name, "r");
-            FILE *append  = fopen (file_name, "a+");
+            FILE *read = fopen(file_name, "r");
+            if (!file_opened(read))
+            {
+                printf("Error: File %s couldn't be read.", file_name);
+                exit(1);
+            }
+
+            FILE *append  = fopen(file_name, "a");
             
-            if (!is_newline_at_end (read))
+            if (!is_newline_at_end(read))
                 fputc('\n', append);
 
             fclose(read);

@@ -56,16 +56,25 @@ main (int argc, char **argv)
     if (ask_help)
         usage(0);
 
-    if (!aflag && argc == 2)
+    if (!aflag && argc > 1)
     {
-        FILE *read    = fopen(argv[1], "r");
-        FILE *append  = fopen(argv[1], "a");
+        for (int i = 1; i < argc; i++)
+        {
+            FILE *read = fopen(argv[i], "r");
+            if (!file_opened(read))
+            {
+                printf("Error: File %s couldn't be read.", argv[i]);
+                exit(1);
+            }
+            
+            FILE *append  = fopen(argv[i], "a");
         
-        if (is_newline_at_end (read) == 0)
-            fputc('\n', append);
+            if (!is_newline_at_end(read))
+               fputc('\n', append);
         
-        fclose(read);
-        fclose(append);
+            fclose(read);
+            fclose(append);
+        }
     }
 
     if (f_switch)
@@ -73,6 +82,12 @@ main (int argc, char **argv)
         if (!STREQ(file_name, "-"))
         {
             FILE *entries_file = fopen(file_name, "r");
+            if (!file_opened(entries_file))
+            {
+                printf("Error: File %s couldn't be read.", file_name);
+                exit(1);
+            }
+            
             file_names_from_file(entries_file);
             fclose(entries_file);
         }
