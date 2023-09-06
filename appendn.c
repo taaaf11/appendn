@@ -8,6 +8,13 @@
 
 */
 
+/*
+
+  In this project, some files are opened twice. One head is used for reading and the other
+  for writing. This choice is made because mode "a+" was not working as expected.
+
+*/
+
 
 #include "definitions.h"
 #include "usage.h"
@@ -23,9 +30,9 @@ struct option longoptions[] = {
 
 
 static flag
-        aflag    = 0,
-        f_switch = 0,
-        ask_help = 0;
+        aflag    = 0, // 1 if user has used a switch
+        f_switch = 0, // 1 if -f is used. File names from given file.
+        ask_help = 0; // 1 if -h is used. Usage info.
 
 int
 main (int argc, char **argv)

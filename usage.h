@@ -12,7 +12,7 @@ usage (int status)
                         "  or   appendn -f FILE\n\n");
 
         fprintf(stderr, "    --files-names,  -f FILE\t\tGet files' names to be operated on from FILE.\n"
-                        "                           \tIf FILE is -, read files names from stdin.\n"
+                        "                           \t\tIf FILE is -, read files names from stdin.\n"
                         "    --help,         -h\t\t\tPrint this help message.\n\n");
         
         exit(status);
@@ -23,7 +23,7 @@ usage (int status)
                     "  or   appendn -f FILE\n\n");
                         
     fprintf(stdout, "    --files-names,  -f FILE\t\tGet files' names to be operated on from FILE.\n"
-                    "                           \tIf FILE is -, read files names from stdin.\n"
+                    "                           \t\tIf FILE is -, read files names from stdin.\n"
                     "    --help,         -h\t\t\tPrint this help message.\n\n");
     
     exit(status);
