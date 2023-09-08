@@ -40,8 +40,7 @@ int
 main (int argc, char **argv)
 {
     char optc,
-        *entries_file_name,
-        *file_name;
+        *entries_file_name;
     
     int optidx;
 
@@ -56,7 +55,6 @@ main (int argc, char **argv)
             
             case 'c':
                 aflag = c_switch = 1;
-                file_name = optarg;
                 break;
             
             case 'h':
@@ -78,7 +76,7 @@ main (int argc, char **argv)
             FILE *read = fopen(argv[i], "r");
             if (!file_opened(read))
             {
-                printf("Error: File %s couldn't be read.", argv[i]);
+                printf("Error: File %s couldn't be read.\n", argv[i]);
                 exit(1);
             }
             
@@ -92,7 +90,7 @@ main (int argc, char **argv)
         }
     }
 
-    if ((c_switch && !f_switch) && argc > 2)
+    if (c_switch && !f_switch) // do operation on all arguments available
     {
         for (int i = 1; i < argc; i++)
         {
@@ -104,13 +102,13 @@ main (int argc, char **argv)
                 FILE *read = fopen("-c", "r");
                 if (is_newline_at_end(read))
                 {
-                    printf("%s: yes", file_name);
+                    printf("%s: yes\n", argv[i]);
                     fclose(read);
                 }
 
                 else
                 {
-                    printf("%s: no", file_name);
+                    printf("%s: no\n", argv[i]);
                     fclose(read);
                 }
 
@@ -120,66 +118,48 @@ main (int argc, char **argv)
             FILE *read = fopen(argv[i], "r");
             if (is_newline_at_end(read))
             {
-                printf("%s: yes", file_name);
+                printf("%s: yes\n", argv[i]);
                 fclose(read);
             }
 
             else
             {
-                printf("%s: no", file_name);
+                printf("%s: no\n", argv[i]);
                 fclose(read);
             }
         }
     }
 
 
-    if (c_switch)
-    {
-        if (f_switch)
-        {
-            if (!STREQ(entries_file_name, "-"))
-            {
-                FILE *entries_file_p = fopen(entries_file_name, "r");
-                if (!file_opened(entries_file_p))
-                {
-                    printf("Error: File %s couldn't be read.", entries_file_name);
-                    exit(1);
-                }
-                
-                chk_file_names_from_file(entries_file_p);
-                fclose(entries_file_p);
-            }
-            
-            else
-                chk_file_names_from_file(stdin);
-            
-            return 0;
-        }
-
-        FILE *read = fopen(file_name, "r");
-        if (is_newline_at_end(read))
-        {
-            printf("%s: yes", file_name);
-            fclose(read);
-        }
-
-        else
-        {
-            printf("%s: no", file_name);
-            fclose(read);
-        }
-        
-        return 0;
-    }
-
-    if (f_switch)
+    if (c_switch && f_switch) // for checking files; names from given file
     {
         if (!STREQ(entries_file_name, "-"))
         {
             FILE *entries_file_p = fopen(entries_file_name, "r");
             if (!file_opened(entries_file_p))
             {
-                printf("Error: File %s couldn't be read.", entries_file_name);
+                printf("Error: File %s couldn't be read.\n", entries_file_name);
+                exit(1);
+            }
+            
+            chk_file_names_from_file(entries_file_p);
+            fclose(entries_file_p);
+        }
+        
+        else
+            chk_file_names_from_file(stdin);
+        
+        return 0;
+    }
+
+    if (f_switch) // for default functionality; append newline if there isn't.
+    {
+        if (!STREQ(entries_file_name, "-"))
+        {
+            FILE *entries_file_p = fopen(entries_file_name, "r");
+            if (!file_opened(entries_file_p))
+            {
+                printf("Error: File %s couldn't be read.\n", entries_file_name);
                 exit(1);
             }
             

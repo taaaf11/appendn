@@ -46,7 +46,7 @@ ap_file_names_from_file (FILE *entries_file_p)
             FILE *read = fopen(file_name, "r");
             if (!file_opened(read))
             {
-                printf("Error: File %s couldn't be read.", file_name);
+                printf("Error: File %s couldn't be read.\n", file_name);
                 exit(1);
             }
 
@@ -79,7 +79,7 @@ chk_file_names_from_file (FILE *entries_file_p)
             FILE *read = fopen(file_name, "r");
             if (!file_opened(read))
             {
-                printf("Error: File %s couldn't be read.", file_name);
+                printf("Error: File %s couldn't be read.\n", file_name);
                 exit(1);
             }
             
