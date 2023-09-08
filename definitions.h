@@ -32,7 +32,7 @@ file_opened (FILE *fp)
 
 /* read files names from a file and do operation on them */
 void
-file_names_from_file (FILE *entries_file_p)
+ap_file_names_from_file (FILE *entries_file_p)
 {
     char file_name[255];
     
@@ -57,6 +57,45 @@ file_names_from_file (FILE *entries_file_p)
 
             fclose(read);
             fclose(append);
+        }
+
+        char file_name[255];
+    }
+}
+
+
+void
+chk_file_names_from_file (FILE *entries_file_p)
+{
+    char file_name[255];
+    
+    while (1)
+    {
+        if (fscanf(entries_file_p, "%s", file_name) != 1)
+            break;
+
+        else
+        {
+            FILE *read = fopen(file_name, "r");
+            if (!file_opened(read))
+            {
+                printf("Error: File %s couldn't be read.", file_name);
+                exit(1);
+            }
+            
+            if (is_newline_at_end(read))
+            {
+                printf("%s: yes", file_name);
+                fclose(read);
+            }
+
+            else
+            {
+                printf("%s: no", file_name);
+                fclose(read);
+            }
+
+            fclose(read);
         }
 
         char file_name[255];
